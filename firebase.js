@@ -45,7 +45,8 @@ const signInWithGoogle = async () => {
     // Verificar se o usuário já existe no Firestore
     const userRef = doc(db, "users", user.uid);
     const docSnap = await getDoc(userRef);
-
+    console.log(user.accessToken);
+    console.log("docSnap", docSnap._document.data.value.mapValue.fields);
     const now = new Date();
     const localDate = new Date(now.getTime() - 3 * 60 * 60 * 1000);
     const formattedDate = localDate.toUTCString();
@@ -57,6 +58,7 @@ const signInWithGoogle = async () => {
         email: user.email,
         creationTime: formattedDate,
         setor: setor || "Setor não encontrado",
+        typeUser: "user",
       });
       console.log("Usuário criado na Firestore");
     } else {
